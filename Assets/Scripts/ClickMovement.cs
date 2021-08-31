@@ -7,10 +7,12 @@ public class ClickMovement : MonoBehaviour
     public Camera cam;
     public NavMeshAgent agent;
 
+    public AttackingRange attackingRange;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        attackingRange = transform.Find("Sphere").gameObject.GetComponent<AttackingRange>();
     }
 
     // Update is called once per frame
@@ -18,14 +20,14 @@ public class ClickMovement : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-           Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit  hit;
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-            if(Physics.Raycast(ray,out hit))
+            if (Physics.Raycast(ray, out hit))
             {
                 agent.SetDestination(hit.point);
             }
-                
+
         }
     }
 }

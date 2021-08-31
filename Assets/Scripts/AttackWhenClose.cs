@@ -7,16 +7,16 @@ public class AttackWhenClose : MonoBehaviour
 
     private Transform enemy;
     private float dist;
-    
+
     public float howClose = 10;
 
 
     public GameObject target;
     public Transform spawnPos;
     public GameObject bullet;
-    private float SpeedBullet= 10f;
+    private float SpeedBullet = 10f;
 
-    public bool canFire= true;
+    public bool canFire = true;
 
 
 
@@ -24,7 +24,8 @@ public class AttackWhenClose : MonoBehaviour
     void Start()
     {
         enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
-        
+
+        StartCoroutine(AttackRoutine());
     }
 
     // Update is called once per frame
@@ -32,15 +33,15 @@ public class AttackWhenClose : MonoBehaviour
     {
         dist = Vector3.Distance(enemy.position, transform.position);
 
-        if(dist<= howClose)
+        if (dist <= howClose)
         {
             transform.LookAt(enemy);
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
 
-            StartCoroutine( WaitForBullets());
+            StartCoroutine(WaitForBullets());
 
-           
+
 
 
         }
@@ -53,19 +54,32 @@ public class AttackWhenClose : MonoBehaviour
             GameObject Spawner = Instantiate(bullet, spawnPos.position, spawnPos.transform.rotation);
             Spawner.GetComponent<Rigidbody>().velocity += transform.forward * SpeedBullet;
         }
-        
+
     }
 
-  IEnumerator WaitForBullets()
+    IEnumerator WaitForBullets()
     {
-        
-        print("NIKOS"); 
+
+        print("NIKOS");
         Shoot();
         canFire = false;
-        
-   
+
+
         yield return new WaitForSeconds(5);
         canFire = true;
         WaitForBullets();
+    }
+
+
+
+    public IEnumerator AttackRoutine()
+    {
+        while (true)
+        {
+            Debug.Log("Attack");
+
+            yield return new WaitForSeconds(2);
+
+        }
     }
 }
