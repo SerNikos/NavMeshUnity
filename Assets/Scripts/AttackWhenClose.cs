@@ -57,19 +57,6 @@ public class AttackWhenClose : MonoBehaviour
 
     }
 
-    IEnumerator WaitForBullets()
-    {
-
-        print("NIKOS");
-        Shoot();
-        canFire = false;
-
-
-        yield return new WaitForSeconds(5);
-        canFire = true;
-        WaitForBullets();
-    }
-
 
 
     public IEnumerator AttackRoutine()
